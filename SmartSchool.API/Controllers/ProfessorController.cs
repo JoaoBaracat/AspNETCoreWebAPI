@@ -15,10 +15,13 @@ namespace SmartSchool.API.Controllers
     public class ProfessorController : ControllerBase
     {
         private readonly SmartContext _context;
+        private readonly IRepository _repo;
 
-        public ProfessorController(SmartContext context)
+        public ProfessorController(SmartContext context,
+            IRepository repo)
         {
             _context = context;
+            _repo = repo;
         }
         [HttpGet]
         public IActionResult Get()
@@ -57,9 +60,11 @@ namespace SmartSchool.API.Controllers
         [HttpPost()]        
         public IActionResult Post(Professor professor)
         {            
-            _context.Add(professor);
-            _context.SaveChanges();
-            return Ok(professor);
+            _repo.Add(professor);
+            if (_repo.SaveChanges()){
+                return Ok(professor);
+            }
+            return BadRequest("Professor não cadastrado.");
         }
 
 
@@ -67,14 +72,16 @@ namespace SmartSchool.API.Controllers
         [HttpPut("{id}")]        
         public IActionResult Put(int id, Professor professor)
         {        
-            var alu = _context.Professores.AsNoTracking().FirstOrDefault(x=> x.Id == id);
-            if (alu == null){
+            var prof = _context.Professores.AsNoTracking().FirstOrDefault(x=> x.Id == id);
+            if (prof == null){
                 return BadRequest("Professor não encontrado.");
             }    
 
-            _context.Update(professor);
-            _context.SaveChanges();
-            return Ok(professor);
+            _repo.Update(prof);
+            if (_repo.SaveChanges()){
+                return Ok(prof);
+            }
+            return BadRequest("Professor não cadastrado.");
         }
 
         //api/Professor
@@ -85,9 +92,11 @@ namespace SmartSchool.API.Controllers
             if (prof == null){
                 return BadRequest("Professor não encontrado.");
             }
-            _context.Update(professor);
-            _context.SaveChanges();
-            return Ok(professor);
+            _repo.Update(professor);
+            if (_repo.SaveChanges()){
+                return Ok(professor);
+            }
+            return BadRequest("Professor não cadastrado.");
         }
 
         //api/Professor
@@ -98,9 +107,12 @@ namespace SmartSchool.API.Controllers
             if (professor == null){
                 return BadRequest("Professor não encontrado.");
             }
-            _context.Remove(professor);
-            _context.SaveChanges(); 
-            return Ok("Professor deletado com sucesso.");
+            _repo.Delete(professor);
+            if (_repo.SaveChanges()){
+                return Ok("Professor deletado com sucesso.");
+            }
+            return BadRequest("Professor não cadastrado.");
+            
         }
 
 
