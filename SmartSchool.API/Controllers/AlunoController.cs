@@ -15,14 +15,11 @@ namespace SmartSchool.API.Controllers
     [ApiController]
     public class AlunoController : ControllerBase
     {
-        private readonly SmartContext _context;
         private readonly IRepository _repo;
 
-        public AlunoController(SmartContext context,
-            IRepository repo)
+        public AlunoController(IRepository repo)
         {
             _repo = repo;
-            _context = context;
         }
 
         // public List<Aluno> Alunos = new List<Aluno>(){
@@ -51,7 +48,8 @@ namespace SmartSchool.API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_context.Alunos);
+            var result = _repo.GetAllAlunos(true);
+            return Ok(result);
         }
 
 
@@ -82,7 +80,8 @@ namespace SmartSchool.API.Controllers
         [HttpGet("byId/{id}")]
         public IActionResult GetById(int id)
         {
-            var aluno = _context.Alunos.Where(x => x.Id == id).FirstOrDefault();
+            // var aluno = _context.Alunos.Where(x => x.Id == id).FirstOrDefault();
+            var aluno = _repo.GetAllAlunoById(id, false);
             if (aluno == null)
             {
                 return BadRequest("Aluno não encontrado");
@@ -91,19 +90,19 @@ namespace SmartSchool.API.Controllers
         }
 
         //query string >> ex: api/Aluno/byName?nome=Laura&sobrenome=Maria
-        [HttpGet("byName")]
-        public IActionResult GetByName(string nome, string sobrenome)
-        {
-            var aluno = _context.Alunos.Where(x =>
-                x.Nome.ToUpper().Contains(nome.ToUpper())
-                && x.Sobrenome.ToUpper().Contains(sobrenome.ToUpper())
-            ).FirstOrDefault();
-            if (aluno == null)
-            {
-                return BadRequest("Aluno não encontrado");
-            }
-            return Ok(aluno);
-        }
+        // [HttpGet("byName")]
+        // public IActionResult GetByName(string nome, string sobrenome)
+        // {
+        //     var aluno = _context.Alunos.Where(x =>
+        //         x.Nome.ToUpper().Contains(nome.ToUpper())
+        //         && x.Sobrenome.ToUpper().Contains(sobrenome.ToUpper())
+        //     ).FirstOrDefault();
+        //     if (aluno == null)
+        //     {
+        //         return BadRequest("Aluno não encontrado");
+        //     }
+        //     return Ok(aluno);
+        // }
 
 
 
@@ -125,7 +124,7 @@ namespace SmartSchool.API.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, Aluno aluno)
         {
-            var alu = _context.Alunos.AsNoTracking().FirstOrDefault(x => x.Id == id);
+            var alu = _repo.GetAllAlunoById(id);// _context.Alunos.AsNoTracking().FirstOrDefault(x => x.Id == id);
             if (alu == null)
             {
                 return BadRequest("Aluno não encontrado.");
@@ -142,7 +141,7 @@ namespace SmartSchool.API.Controllers
         [HttpPatch("{id}")]
         public IActionResult Patch(int id, Aluno aluno)
         {
-            var alu = _context.Alunos.AsNoTracking().FirstOrDefault(x => x.Id == id);
+            var alu = _repo.GetAllAlunoById(id);//_context.Alunos.AsNoTracking().FirstOrDefault(x => x.Id == id);
             if (alu == null)
             {
                 return BadRequest("Aluno não encontrado.");
@@ -158,7 +157,7 @@ namespace SmartSchool.API.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var aluno = _context.Alunos.FirstOrDefault(x => x.Id == id);
+            var aluno = _repo.GetAllAlunoById(id);//_context.Alunos.FirstOrDefault(x => x.Id == id);
             if (aluno == null)
             {
                 return BadRequest("Aluno não encontrado.");

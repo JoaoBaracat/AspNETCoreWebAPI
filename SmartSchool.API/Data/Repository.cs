@@ -63,7 +63,7 @@ namespace SmartSchool.API.Data
             return query.ToArray();
         }
 
-        public Aluno GetAllAlunosById(int id, 
+        public Aluno GetAllAlunoById(int id, 
             bool includeProfessor = false)
         {
             IQueryable<Aluno> query = _contexto.Alunos;
@@ -79,12 +79,14 @@ namespace SmartSchool.API.Data
             return query.FirstOrDefault();
         }
 
-        public Professor[] GetAllProfessores(bool includeDisciplina =false)
+        public Professor[] GetAllProfessores(bool includeAlunos = false)
         {
             IQueryable<Professor> query = _contexto.Professores;
 
-            if (includeDisciplina){
+            if (includeAlunos){
                 query = query.Include(x=> x.Disciplinas)
+                    .ThenInclude(d => d.AlunoDisciplinas)
+                    .ThenInclude(ad => ad.Aluno)
                     ;
             }
 
@@ -93,29 +95,33 @@ namespace SmartSchool.API.Data
         }
 
         public Professor[] GetAllProfessoresByDisciplinaId(int disciplinaId, 
-            bool includeDisciplina = false)
+            bool includeAlunos = false)
         {
             IQueryable<Professor> query = _contexto.Professores;
 
-            if (includeDisciplina){
+            if (includeAlunos){
                 query = query.Include(x=> x.Disciplinas)
+                    .ThenInclude(d => d.AlunoDisciplinas)
+                    .ThenInclude(ad => ad.Aluno)
                     ;
             }
 
             query = query.AsNoTracking()
                 .OrderBy(x=> x.Id)
                 .Where(x=> x.Disciplinas
-                .Any(ad=>ad.Id == disciplinaId));
+                .Any(d=> d.AlunoDisciplinas.Any(ad => ad.DisciplinaId == disciplinaId)));
             return query.ToArray();
         }
 
-        public Professor GetAllProfessoresById(int id,
-            bool includeDisciplina = false)
+        public Professor GetAllProfessorById(int id,
+            bool includeAlunos = false)
         {
             IQueryable<Professor> query = _contexto.Professores;
 
-            if (includeDisciplina){
+            if (includeAlunos){
                 query = query.Include(x=> x.Disciplinas)
+                    .ThenInclude(d => d.AlunoDisciplinas)
+                    .ThenInclude(ad => ad.Aluno)
                     ;
             }
 
