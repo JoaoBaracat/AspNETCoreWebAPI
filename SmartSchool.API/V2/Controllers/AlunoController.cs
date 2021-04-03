@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartSchool.API.Data;
-using SmartSchool.API.Dtos;
+using SmartSchool.API.V2.Dtos;
 using SmartSchool.API.Models;
 using System;
 using System.Collections.Generic;
@@ -11,15 +11,24 @@ using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace SmartSchool.API.Controllers
+namespace SmartSchool.API.V2.Controllers
 {
-    [Route("api/[controller]")]
+    /// <summary>
+    /// Versão 2 do controlador de alunos
+    /// </summary>
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("2.0")]
     [ApiController]
     public class AlunoController : ControllerBase
     {
         private readonly IRepository _repo;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repo"></param>
+        /// <param name="mapper"></param>
         public AlunoController(IRepository repo, IMapper mapper)
         {
             _mapper = mapper;
@@ -48,20 +57,16 @@ namespace SmartSchool.API.Controllers
 
         // };
 
-
+        /// <summary>
+        /// Método responsável para retornar todos os alunos.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Get()
         {
             var alunos = _repo.GetAllAlunos(false);
             
             return Ok(_mapper.Map<IEnumerable<AlunoDto>>(alunos));
-        }
-
-
-        [HttpGet("getRegister")]
-        public IActionResult GetRegister()
-        {
-            return Ok(new AlunoRegistrarDto());
         }
 
         // [HttpGet("{id:int}")]
@@ -75,7 +80,7 @@ namespace SmartSchool.API.Controllers
         // }
 
         //querystring
-        ///api/Aluno/byId?id=1
+        // /api/Aluno/byId?id=1
         // [HttpGet("byId")]
         // public IActionResult GetById(int id)
         // {
@@ -86,8 +91,11 @@ namespace SmartSchool.API.Controllers
         //     return Ok(aluno);
         // }
 
-
-        ///api/Aluno/byId/1
+        /// <summary>
+        /// Método responsável por retornar apenas um Aluno por ID.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -147,24 +155,6 @@ namespace SmartSchool.API.Controllers
                 return BadRequest("Aluno não encontrado.");
             }
 
-            _mapper.Map(model, aluno);
-
-            _repo.Update(aluno);
-            if (_repo.SaveChanges()){
-                return Created($"/api/aluno/{model.Id}", _mapper.Map<AlunoDto>(aluno));
-            }
-            return BadRequest("Aluno não cadastrado.");
-        }
-
-        //api/Aluno
-        [HttpPatch("{id}")]
-        public IActionResult Patch(int id, AlunoRegistrarDto model)
-        {
-            var aluno = _repo.GetAllAlunoById(id);//_context.Alunos.AsNoTracking().FirstOrDefault(x => x.Id == id);
-            if (aluno == null)
-            {
-                return BadRequest("Aluno não encontrado.");
-            }
             _mapper.Map(model, aluno);
 
             _repo.Update(aluno);

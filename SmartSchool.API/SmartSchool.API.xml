@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SmartSchool.API</name>
+    </assembly>
+    <members>
+        <member name="T:SmartSchool.API.V1.Controllers.AlunoController">
+            <summary>
+            Versão 1 do controlador de alunos
+            </summary>
+        </member>
+        <member name="M:SmartSchool.API.V1.Controllers.AlunoController.#ctor(SmartSchool.API.Data.IRepository,AutoMapper.IMapper)">
+            <summary>
+            
+            </summary>
+            <param name="repo"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:SmartSchool.API.V1.Controllers.AlunoController.Get">
+            <summary>
+            Método responsável para retornar todos os alunos.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.API.V1.Controllers.AlunoController.GetRegister">
+            <summary>
+            Método responsável por retornar apenas um único AlunoDTO.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.API.V1.Controllers.AlunoController.GetById(System.Int32)">
+            <summary>
+            Método responsável por retornar apenas um Aluno por ID.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SmartSchool.API.V1.Controllers.ProfessorController">
+            <summary>
+            Versão 1 do controlador de professores
+            </summary>
+        </member>
+        <member name="T:SmartSchool.API.V1.Dtos.AlunoRegistrarDto">
+            <summary>
+            Objeto para salvar ou alterar alunos novos.
+            </summary>
+        </member>
+        <member name="P:SmartSchool.API.V1.Dtos.AlunoRegistrarDto.Id">
+            <summary>
+            ID do Aluno
+            </summary>
+        </member>
+        <member name="P:SmartSchool.API.V1.Dtos.AlunoRegistrarDto.Matricula">
+            <summary>
+            Chave do Aluno para outros negócios na instituição
+            </summary>
+        </member>
+        <member name="P:SmartSchool.API.V1.Dtos.AlunoRegistrarDto.Nome">
+            <summary>
+            Nome do Aluno
+            </summary>
+        </member>
+        <member name="T:SmartSchool.API.V2.Controllers.AlunoController">
+            <summary>
+            Versão 2 do controlador de alunos
+            </summary>
+        </member>
+        <member name="M:SmartSchool.API.V2.Controllers.AlunoController.#ctor(SmartSchool.API.Data.IRepository,AutoMapper.IMapper)">
+            <summary>
+            
+            </summary>
+            <param name="repo"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:SmartSchool.API.V2.Controllers.AlunoController.Get">
+            <summary>
+            Método responsável para retornar todos os alunos.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.API.V2.Controllers.AlunoController.GetById(System.Int32)">
+            <summary>
+            Método responsável por retornar apenas um Aluno por ID.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SmartSchool.API.V2.Dtos.AlunoRegistrarDto">
+            <summary>
+            Objeto para salvar ou alterar alunos novos.
+            </summary>
+        </member>
+        <member name="P:SmartSchool.API.V2.Dtos.AlunoRegistrarDto.Id">
+            <summary>
+            ID do Aluno
+            </summary>
+        </member>
+        <member name="P:SmartSchool.API.V2.Dtos.AlunoRegistrarDto.Matricula">
+            <summary>
+            Chave do Aluno para outros negócios na instituição
+            </summary>
+        </member>
+        <member name="P:SmartSchool.API.V2.Dtos.AlunoRegistrarDto.Nome">
+            <summary>
+            Nome do Aluno
+            </summary>
+        </member>
+    </members>
+</doc>
