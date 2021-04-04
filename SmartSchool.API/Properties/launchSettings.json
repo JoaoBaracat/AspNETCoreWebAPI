@@ -19,8 +19,8 @@
     },
     "SmartSchool.API": {
       "commandName": "Project",
-      //"launchBrowser": true,
-      //"launchUrl": "weatherforecast",
+      "launchBrowser": true,
+      "launchUrl": "",
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
