@@ -30,10 +30,15 @@ namespace SmartSchool.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // services.AddDbContext<SmartContext>(
+            //     context => context.UseSqlite(Configuration.GetConnectionString("Default"))
+            // );
             services.AddDbContext<SmartContext>(
-                context => context.UseSqlite(Configuration.GetConnectionString("Default"))
+                context => context.UseMySql(Configuration.GetConnectionString("MySqlConnection"))
             );
             
+
+
             services.AddControllers()
                 .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling =
                     Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -71,7 +76,7 @@ namespace SmartSchool.API
                                 Title = "SmartSchool API",
                                 Version = description.ApiVersion.ToString(),//"1.0",
                                 TermsOfService = new Uri("https://SeusTermosDeUso.com"),
-                                Description = "Descrição da API para SmartSchool",
+                                Description = "Descriï¿½ï¿½o da API para SmartSchool",
                                 License = new Microsoft.OpenApi.Models.OpenApiLicense
                                 {
                                     Name = "Smart School License",
@@ -79,7 +84,7 @@ namespace SmartSchool.API
                                 },
                                 Contact = new Microsoft.OpenApi.Models.OpenApiContact
                                 {
-                                    Name = "João Baracat",
+                                    Name = "Joï¿½o Baracat",
                                     Email = "",
                                     Url = new Uri("http://meusite.com")
                                 }
