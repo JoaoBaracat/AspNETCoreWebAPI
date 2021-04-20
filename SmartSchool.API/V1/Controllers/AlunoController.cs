@@ -83,6 +83,15 @@ namespace SmartSchool.API.V1.Controllers
             return Ok(new AlunoRegistrarDto());
         }
 
+        [HttpGet("ByDisciplina/{id}")]
+        public async Task<IActionResult> GetByDisciplinaId(int id)
+        {
+
+            var result = await _repo.GetAllAlunosByDisciplinaIdAsync(id, false);
+
+            return Ok(result);
+        }
+
         // [HttpGet("{id:int}")]
         // public IActionResult GetById(int id)
         // {
@@ -120,7 +129,7 @@ namespace SmartSchool.API.V1.Controllers
                 return BadRequest("Aluno não encontrado");
             }
 
-            var alunoDto = _mapper.Map<AlunoDto>(aluno);
+            var alunoDto = _mapper.Map<AlunoRegistrarDto>(aluno);
 
             return Ok(alunoDto);
         }
@@ -180,7 +189,7 @@ namespace SmartSchool.API.V1.Controllers
 
         //api/Aluno
         [HttpPatch("{id}")]
-        public IActionResult Patch(int id, AlunoRegistrarDto model)
+        public IActionResult Patch(int id, AlunoPatchDto model)
         {
             var aluno = _repo.GetAllAlunoById(id);//_context.Alunos.AsNoTracking().FirstOrDefault(x => x.Id == id);
             if (aluno == null)
@@ -191,7 +200,28 @@ namespace SmartSchool.API.V1.Controllers
 
             _repo.Update(aluno);
             if (_repo.SaveChanges()){
-                return Created($"/api/aluno/{model.Id}", _mapper.Map<AlunoDto>(aluno));
+                return Created($"/api/aluno/{model.Id}", _mapper.Map<AlunoPatchDto>(aluno));
+            }
+            return BadRequest("Aluno não cadastrado.");
+        }
+
+
+        [HttpPatch("{id}/trocarEstado")]
+        public IActionResult TrocarEstado(int id, TrocaEstadoDto trocaEstado)
+        {
+            var aluno = _repo.GetAllAlunoById(id);//_context.Alunos.AsNoTracking().FirstOrDefault(x => x.Id == id);
+            
+            if (aluno == null)
+            {
+                return BadRequest("Aluno não encontrado.");
+            }
+
+            aluno.Ativo = trocaEstado.Estado;
+
+            _repo.Update(aluno);
+            if (_repo.SaveChanges()){
+                var msg = aluno.Ativo ? "ativado" : "desativado";
+                return Ok(new { message = $"Aluno {msg} com sucesso."});
             }
             return BadRequest("Aluno não cadastrado.");
         }

@@ -40,6 +40,11 @@
             Versão 1 do controlador de professores
             </summary>
         </member>
+        <member name="T:SmartSchool.API.V1.Dtos.AlunoPatchDto">
+            <summary>
+            Objeto para salvar ou alterar alunos novos.
+            </summary>
+        </member>
         <member name="T:SmartSchool.API.V1.Dtos.AlunoRegistrarDto">
             <summary>
             Objeto para salvar ou alterar alunos novos.

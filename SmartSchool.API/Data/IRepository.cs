@@ -14,7 +14,7 @@ namespace SmartSchool.API.Data
 
          Task<PageList<Aluno>> GetAllAlunosAsync(PageParams pageParams, bool includeProfessor =false);
          Aluno [] GetAllAlunos(bool includeProfessor =false);
-         Aluno [] GetAllAlunosByDisciplinaId(int disciplinaId, 
+         Task<Aluno[]> GetAllAlunosByDisciplinaIdAsync(int disciplinaId, 
             bool includeProfessor = false);
          Aluno GetAllAlunoById(int id, 
             bool includeProfessor = false);
@@ -24,6 +24,9 @@ namespace SmartSchool.API.Data
          Professor[] GetAllProfessoresByDisciplinaId(int disciplinaId, 
             bool includeAlunos = false);
          Professor GetAllProfessorById(int id,
+            bool includeAlunos = false);
+
+         Professor[] GetAllProfessoresByAlunoId(int alunoId,
             bool includeAlunos = false);
 
         //  T [] ObterTodos();
