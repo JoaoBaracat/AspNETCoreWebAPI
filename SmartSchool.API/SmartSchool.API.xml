@@ -4,6 +4,37 @@
         <name>SmartSchool.API</name>
     </assembly>
     <members>
+        <member name="T:SmartSchool.API.V1.Controllers.AlunoAuthController">
+            <summary>
+            Versão 1 do controlador de alunos
+            </summary>
+        </member>
+        <member name="M:SmartSchool.API.V1.Controllers.AlunoAuthController.#ctor(SmartSchool.API.Data.IRepository,AutoMapper.IMapper)">
+            <summary>
+            
+            </summary>
+            <param name="repo"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:SmartSchool.API.V1.Controllers.AlunoAuthController.Get(SmartSchool.API.Helpers.PageParams)">
+            <summary>
+            Método responsável para retornar todos os alunos.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.API.V1.Controllers.AlunoAuthController.GetRegister">
+            <summary>
+            Método responsável por retornar apenas um único AlunoDTO.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.API.V1.Controllers.AlunoAuthController.GetById(System.Int32)">
+            <summary>
+            Método responsável por retornar apenas um Aluno por ID.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:SmartSchool.API.V1.Controllers.AlunoController">
             <summary>
             Versão 1 do controlador de alunos
